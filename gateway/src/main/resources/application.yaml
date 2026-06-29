@@ -1,0 +1,65 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: gateway
+  cloud:
+    gateway:
+      server:
+        webmvc:
+          routes:
+            - id: partida-service
+              uri: lb://partidas
+              predicates:
+                - Path=/api/v1/partidas/**, /partidas/api-docs/** 
+
+            - id: jefes-service
+              uri: lb://partidas
+              predicates:
+                - Path=/api/v1/jefes/**, /jefes/api-docs/**
+            
+            - id: niveles-service
+              uri: lb://partidas
+              predicates:
+                - Path=/api/v1/niveles/**, /niveles/api-docs/**
+                            
+            - id: preguntas-service
+              uri: lb://pregunta
+              predicates:
+                - Path=/api/v1/preguntas/**, /preguntas/api-docs/**
+
+            - id: respuestas-service
+              uri: lb://pregunta
+              predicates:
+                - Path=/api/v1/respuestas/**, /respuestas/api-docs/**
+
+
+            - id: respuesta-service
+              uri: lb://pregunta
+              predicates:
+                - Path=/api/v1/respuestas-jugador/**, /respuestas-jugador/api-docs/**
+
+            - id: jugadores-service
+              uri: lb://jugadores
+              predicates:
+                - Path=/api/v1/jugadores/**, /jugadores/api-docs/**
+
+            - id: arma-service
+              uri: lb://jugadores
+              predicates:
+                - Path=/api/v1/armas/**, /armas/api-docs/**                  
+
+                
+springdoc:
+  swagger-ui:
+    path: /swagger-ui/index.html
+    urls:
+      - name: Microservicio partidas
+        url: /partidas/api-docs
+      - name: Microservicio preguntas
+        url: /preguntas/api-docs
+      - name: Microservicio jugadores
+        url: /jugadores/api-docs
+  api-docs:
+    enabled: true
